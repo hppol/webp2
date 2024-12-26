@@ -1,0 +1,56 @@
+/* 전체 페이지 스타일 */
+.profile-page {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 20px;
+}
+
+.profile-header {
+  margin-bottom: 30px;
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid #f39c12;
+}
+
+.profile-header h2 {
+  font-size: 2rem;
+  margin: 10px 0;
+}
+
+.profile-header p {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* 버튼 스타일 */
+.profile-actions {
+  margin-top: 20px;
+}
+
+.action-button {
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+  background-color: #e67e22;
+}
+
+.logout {
+  background-color: #e74c3c;
+}
+
+.logout:hover {
+  background-color: #c0392b;
+}
