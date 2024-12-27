@@ -1,86 +1,66 @@
-/* 페이지 전체 스타일 */
 .search-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   font-family: Arial, sans-serif;
   padding: 20px;
-  background: linear-gradient(to bottom right, #1e90ff, #87cefa);
-  min-height: 100vh;
-}
-
-/* 검색 컨테이너 */
-.search-container {
-  background: white;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-  width: 80%;
-  max-width: 600px;
   text-align: center;
 }
 
-/* 제목 */
+.search-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
 .search-title {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #333;
+  font-size: 24px;
   margin-bottom: 20px;
 }
 
-/* 폼 스타일 */
 .search-form {
   display: flex;
-  align-items: center;
-  justify-content: center;
   gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 .search-input {
-  flex: 1;
-  padding: 10px 15px;
-  border: 2px solid #1e90ff;
-  border-radius: 20px;
-  font-size: 1rem;
-  outline: none;
-  transition: border-color 0.3s ease;
-}
-
-.search-input:focus {
-  border-color: #ff4500;
+  width: 70%;
+  padding: 10px;
+  font-size: 16px;
 }
 
 .search-button {
-  background: #ff4500;
-  color: white;
-  border: none;
   padding: 10px 20px;
-  font-size: 1rem;
-  border-radius: 20px;
+  font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
-.search-button:hover {
-  background: #d73814;
-}
-
-/* 검색 결과 */
 .search-results {
   margin-top: 20px;
-  text-align: left;
 }
 
 .search-result-item {
-  background: #f4f4f4;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
   padding: 10px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.result-image {
+  width: 100px;
+  height: 150px;
+  margin-right: 20px;
+  border-radius: 5px;
+}
+
+.result-info {
+  text-align: left;
+}
+
+.error-message {
+  color: red;
 }
 
 .no-results {
-  color: #666;
-  font-size: 1rem;
-  font-style: italic;
+  color: gray;
 }

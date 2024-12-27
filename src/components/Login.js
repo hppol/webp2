@@ -1,29 +1,47 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { auth } from "../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      alert("로그인 성공!");
+      navigate("/profile"); // 로그인 후 프로필 페이지로 이동
+    } catch (error) {
+      alert(`로그인 실패: ${error.message}`);
+    }
+  };
+
   return (
-    <div className="login">
-      <h1>로그인</h1>
-      <form>
-        <div className="form-group">
-          <label htmlFor="email">이메일</label>
-          <input type="email" id="email" placeholder="이메일을 입력하세요" />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">비밀번호</label>
-          <input
-            type="password"
-            id="password"
-            placeholder="비밀번호를 입력하세요"
-          />
-        </div>
+    <div className="login-container">
+      <h2>로그인</h2>
+      <form onSubmit={handleLogin} className="login-form">
+        <input
+          type="email"
+          placeholder="이메일"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="비밀번호"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
         <button type="submit">로그인</button>
       </form>
       <div className="signup-link">
-        <p>아직 회원이 아니신가요?</p>
-        <Link to="/signup">회원가입</Link>
+        <p>
+          아직 회원이 아니신가요? <a href="/signup">회원가입</a>
+        </p>
       </div>
     </div>
   );

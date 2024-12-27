@@ -8,6 +8,9 @@ import Signup from "./components/Signup";
 import Search from "./components/Search";
 import Profile from "./components/Profile";
 
+// Firebase 설정 불러오기
+import "./firebase"; // firebase.js 파일을 가져옵니다.
+
 function App() {
   return (
     <Router>

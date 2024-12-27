@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { auth } from "../firebase";
 import "./MainPage.css";
 
 const MainPage = () => {
@@ -6,6 +7,7 @@ const MainPage = () => {
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedGenre, setSelectedGenre] = useState("All");
+  const [userName, setUserName] = useState(null);
 
   // API 호출 함수
   const fetchMovies = async () => {
@@ -42,13 +44,27 @@ const MainPage = () => {
 
   useEffect(() => {
     fetchMovies();
+
+    // 로그인 상태 확인
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUserName(user.displayName || user.email); // 닉네임 또는 이메일 표시
+      } else {
+        setUserName(null);
+      }
+    });
+    return () => unsubscribe();
   }, []);
 
   return (
     <div className="main-page">
       {/* Hero Section */}
       <header className="hero-section">
-        <h1>당신을 위한 영화 추천</h1>
+        <h1>
+          {userName
+            ? `${userName}님을 위한 영화 추천`
+            : "당신을 위한 영화 추천"}
+        </h1>
         <p>사용자 취향에 기반한 맞춤형 영화 추천 서비스를 제공합니다.</p>
       </header>
 

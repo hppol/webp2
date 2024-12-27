@@ -1,102 +1,102 @@
-/* 전체 화면 중앙 정렬 */
-.login {
+/* 로그인 페이지 스타일 */
+.login-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start; /* 수직 중앙에서 위로 올림 */
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #74ebd5, #9face6);
-  font-family: "Arial", sans-serif;
-  color: #333;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  background-color: #f4f7fc;
+  padding-top: 50px; /* 로그인 폼을 위로 50px 정도 올림 */
 }
 
-/* 로그인 제목 */
-.login h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  color: #fff;
-}
-
-/* 폼 스타일 */
-.login form {
-  background: #ffffff;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
-}
-
-/* 폼 그룹 */
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-/* 레이블 */
-.form-group label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  color: #666;
-}
-
-/* 인풋 */
-.form-group input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
+.login-form {
+  background-color: #ffffff;
+  padding: 20px;
   border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
 }
 
-.form-group input:focus {
-  border-color: #74ebd5;
+h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+input:focus {
   outline: none;
+  border-color: #007bff;
 }
 
-/* 버튼 스타일 */
 button {
   width: 100%;
-  padding: 0.75rem;
-  background: #74ebd5;
-  color: #fff;
-  font-size: 1.2rem;
-  font-weight: bold;
+  padding: 10px;
+  background-color: #007bff;
+  color: #ffffff;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
+  font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s;
 }
 
 button:hover {
-  background: #67c9c7;
+  background-color: #0056b3;
 }
 
-/* 회원가입 링크 */
+button:active {
+  background-color: #004085;
+}
+
 .signup-link {
-  margin-top: 1.5rem;
-  text-align: center;
-  color: #fff;
-}
-
-.signup-link p {
-  margin-bottom: 0.5rem;
-  font-size: 1rem;
+  margin-top: 10px;
 }
 
 .signup-link a {
+  color: #007bff;
   text-decoration: none;
-  color: #ffffff;
-  font-weight: bold;
-  background: #67c9c7;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  transition: background-color 0.3s, transform 0.2s;
 }
 
 .signup-link a:hover {
-  background: #5ab1af;
-  transform: translateY(-2px);
+  text-decoration: underline;
+}
+
+/* 회원가입 페이지 스타일 */
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f7fc;
+}
+
+.signup-form {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
+}
+
+.signup-form input {
+  margin: 10px 0;
+}
+
+.signup-form button {
+  background-color: #28a745;
+}
+
+.signup-form button:hover {
+  background-color: #218838;
 }

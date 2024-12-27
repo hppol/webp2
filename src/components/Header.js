@@ -1,8 +1,22 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { auth } from "../firebase";
+import { signOut } from "firebase/auth";
 import "./Header.css";
 
 const Header = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      alert("로그아웃 성공!");
+      navigate("/login");
+    } catch (error) {
+      alert(`로그아웃 실패: ${error.message}`);
+    }
+  };
+
   return (
     <header className="header">
       <div className="logo">
@@ -19,12 +33,24 @@ const Header = () => {
           <li>
             <Link to="/search">Search</Link>
           </li>
-          <li>
-            <Link to="/profile">Profile</Link>
-          </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
+
+          {/* 로그인 상태에 따른 메뉴 변경 */}
+          {auth.currentUser ? (
+            <>
+              <li>
+                <Link to="/profile">Profile</Link>
+              </li>
+              <li>
+                <Link to="/login" onClick={handleLogout}>
+                  Logout
+                </Link>
+              </li>
+            </>
+          ) : (
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+          )}
         </ul>
       </nav>
     </header>

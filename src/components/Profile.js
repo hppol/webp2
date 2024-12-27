@@ -1,31 +1,40 @@
-import React from "react";
-import "./Profile.css";
+import React, { useEffect, useState } from "react";
+import { auth, db } from "../firebase";
+import { doc, getDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
-  const user = {
-    name: "홍길동",
-    email: "hong@example.com",
-    joinedDate: "2023-01-01",
-    profileImage: "https://via.placeholder.com/150",
-  };
+  const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (auth.currentUser) {
+        const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
+        if (userDoc.exists()) {
+          setUserData(userDoc.data());
+        } else {
+          alert("사용자 데이터를 찾을 수 없습니다.");
+        }
+      } else {
+        alert("로그인이 필요합니다.");
+        navigate("/login");
+      }
+    };
+    fetchUserData();
+  }, [navigate]);
 
   return (
-    <div className="profile-page">
-      <div className="profile-header">
-        <img
-          src={user.profileImage}
-          alt="프로필 사진"
-          className="profile-image"
-        />
-        <h2>{user.name}</h2>
-        <p>{user.email}</p>
-        <p>가입일: {user.joinedDate}</p>
-      </div>
-
-      <div className="profile-actions">
-        <button className="action-button">프로필 수정</button>
-        <button className="action-button logout">로그아웃</button>
-      </div>
+    <div>
+      <h2>프로필</h2>
+      {userData ? (
+        <div>
+          <p>닉네임: {userData.nickname}</p>
+          <p>이메일: {userData.email}</p>
+        </div>
+      ) : (
+        <p>로딩 중...</p>
+      )}
     </div>
   );
 };

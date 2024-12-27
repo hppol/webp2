@@ -1,94 +1,73 @@
 import React, { useState } from "react";
+import { auth, db } from "../firebase";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 import "./Signup.css";
 
 const Signup = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [nickname, setNickname] = useState("");
+  const navigate = useNavigate();
 
-  const [message, setMessage] = useState("");
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    const { username, email, password, confirmPassword } = formData;
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
 
-    if (!username || !email || !password || !confirmPassword) {
-      setMessage("모든 필드를 입력해주세요!");
-      return;
+      await updateProfile(user, { displayName: nickname });
+      await setDoc(doc(db, "users", user.uid), {
+        email: user.email,
+        nickname: nickname,
+        uid: user.uid,
+      });
+
+      alert("회원가입 완료!");
+      navigate("/login"); // 회원가입 후 로그인 화면으로 이동
+    } catch (error) {
+      alert(`회원가입 실패: ${error.message}`);
     }
-
-    if (password !== confirmPassword) {
-      setMessage("비밀번호가 일치하지 않습니다.");
-      return;
-    }
-
-    setMessage("회원가입 성공!");
-    // 서버로 데이터를 전송하는 로직 (추후 구현)
-    console.log("Signup Data:", formData);
   };
 
   return (
-    <div className="signup-page">
-      <div className="signup-container">
-        <h1 className="signup-title">회원가입</h1>
-        <form className="signup-form" onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="username">사용자 이름</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              placeholder="사용자 이름을 입력하세요"
-              value={formData.username}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="email">이메일</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="이메일 주소를 입력하세요"
-              value={formData.email}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">비밀번호</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="비밀번호를 입력하세요"
-              value={formData.password}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="confirmPassword">비밀번호 확인</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              placeholder="비밀번호를 다시 입력하세요"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-            />
-          </div>
+    <div className="signup-container">
+      <div className="signup-box">
+        <h2>회원가입</h2>
+        <form onSubmit={handleSignup} className="signup-form">
+          <input
+            id="email"
+            type="email"
+            placeholder="이메일"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="signup-input"
+          />
+          <input
+            id="password"
+            type="password"
+            placeholder="비밀번호"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="signup-input"
+          />
+          <input
+            id="nickname"
+            type="text"
+            placeholder="닉네임"
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
+            className="signup-input"
+          />
           <button type="submit" className="signup-button">
             회원가입
           </button>
         </form>
-        {message && <p className="signup-message">{message}</p>}
       </div>
     </div>
   );
