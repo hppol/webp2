@@ -20,7 +20,7 @@ const Search = () => {
 
     try {
       const response = await fetch(
-        `https://yts.mx/api/v2/list_movies.json?query_term=${searchTerm}&limit=10`
+        `https://yts.mx/api/v2/list_movies.json?query_term=${searchTerm}&limit=20`
       );
       const data = await response.json();
 

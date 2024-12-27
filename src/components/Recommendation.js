@@ -6,18 +6,16 @@ const Recommendation = () => {
   const [loading, setLoading] = useState(true); // 로딩 상태
   const [rating, setRating] = useState(8); // 기본 평점 8점 이상
   const [genre, setGenre] = useState("Action"); // 기본 장르는 액션
-  const [year, setYear] = useState(2020); // 기본 연도 2020년
   const [isFilterOpen, setIsFilterOpen] = useState({
     rating: false,
     genre: false,
-    year: false,
   }); // 필터 메뉴 상태
 
   // 영화 데이터를 가져오는 함수
   const fetchMovies = useCallback(async () => {
     try {
       const response = await fetch(
-        `https://yts.mx/api/v2/list_movies.json?limit=10&minimum_rating=${rating}&genre=${genre}&year=${year}&sort_by=download_count`
+        `https://yts.mx/api/v2/list_movies.json?limit=50&minimum_rating=${rating}&genre=${genre}&sort_by=download_count`
       );
       const data = await response.json();
       if (data.status === "ok") {
@@ -30,7 +28,7 @@ const Recommendation = () => {
     } finally {
       setLoading(false);
     }
-  }, [rating, genre, year]);
+  }, [rating, genre]);
 
   // 컴포넌트 렌더링 시, 필터 값이 바뀔 때마다 영화 데이터를 새로 불러옴
   useEffect(() => {
@@ -49,7 +47,7 @@ const Recommendation = () => {
     <div className="recommendation-page">
       <h1 className="recommendation-title">추천 영화</h1>
       <p className="recommendation-description">
-        원하는 평점, 장르, 연도를 선택해보세요!
+        원하는 평점, 장르를 선택해보세요!
       </p>
 
       {/* 필터링 옵션 */}
@@ -64,7 +62,7 @@ const Recommendation = () => {
           </button>
           {isFilterOpen.rating && (
             <div className="filter-dropdown">
-              {[5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9].map((rate) => (
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((rate) => (
                 <button
                   key={rate}
                   onClick={() => {
@@ -102,6 +100,21 @@ const Recommendation = () => {
                 "Thriller",
                 "Mystery",
                 "Documentary",
+                "Animation",
+                "Crime",
+                "Biography",
+                "Family",
+                "Music",
+                "Musical",
+                "Western",
+                "History",
+                "War",
+                "Sport",
+                "Film-Noir",
+                "Reality-TV",
+                "Talk-Show",
+                "News",
+                "Short",
               ].map((genreType) => (
                 <button
                   key={genreType}
@@ -114,35 +127,6 @@ const Recommendation = () => {
                   {genreType}
                 </button>
               ))}
-            </div>
-          )}
-        </div>
-
-        {/* 연도 선택 */}
-        <div className="filter-section">
-          <button
-            onClick={() => toggleFilterMenu("year")}
-            className="filter-button"
-          >
-            {year}년
-          </button>
-          {isFilterOpen.year && (
-            <div className="filter-dropdown">
-              {[...Array(35).keys()].map((i) => {
-                const yearOption = 1990 + i;
-                return (
-                  <button
-                    key={yearOption}
-                    onClick={() => {
-                      setYear(yearOption);
-                      toggleFilterMenu("year"); // 선택 후 닫기
-                    }}
-                    className="filter-option"
-                  >
-                    {yearOption}년
-                  </button>
-                );
-              })}
             </div>
           )}
         </div>
